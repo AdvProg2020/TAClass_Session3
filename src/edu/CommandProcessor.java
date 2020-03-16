@@ -75,6 +75,17 @@ public class CommandProcessor {
         }
     }
 
+    private void processGoNextSemester() {
+        manager.goNextSemester();
+        System.out.println("Welcome to semester " + manager.getCurrentSemester());
+    }
+
+    private void processShowCourseHistory(String[] splitInput) {
+        for (Course course : manager.getCoursesOfSemester(splitInput[3])) {
+            System.out.println(course);
+        }
+    }
+
     public void run() {
         String input;
         System.out.println("Enter your command :");
@@ -101,8 +112,11 @@ public class CommandProcessor {
                 processSubmitCourseMark(input.split("\\s"));
             } else if (input.startsWith("show report for student")) {
                 processShowReportForStudent(input.split("\\s"));
-            }
-            else {
+            } else if (input.startsWith("go next semester")) {
+                processGoNextSemester();
+            } else if (input.startsWith("show courses history")) {
+                processShowCourseHistory(input.split("\\s"));
+            } else {
                 System.err.println("invalid command");
             }
         }

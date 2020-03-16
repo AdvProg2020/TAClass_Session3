@@ -1,6 +1,7 @@
 package edu;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -98,5 +99,40 @@ public class Manager {
     public HashMap<Course, CourseInfo> getStudentCoursesInfoThisSemester(String studentId) {
         Student student = getStudentById(studentId);
         return student.getCoursesThisSemester();
+    }
+
+    private void updateCurrentSemester() {
+        String[] splitCurrentSemester = currentSemester.split("-");
+        int year = Integer.parseInt(splitCurrentSemester[0]);
+        int term = Integer.parseInt(splitCurrentSemester[1]);
+        if (term == 3) {
+            term = 1;
+            year += 1;
+        } else {
+            term += 1;
+        }
+        currentSemester = "" + year + '-' + term;
+    }
+
+    public void goNextSemester() {
+        for (Student student : students) {
+            student.passCourses();
+        }
+        coursesHistory.addAll(coursesThisSemester);
+        coursesThisSemester.clear();
+        updateCurrentSemester();
+    }
+
+    public String getCurrentSemester() {
+        return currentSemester;
+    }
+
+    public ArrayList<Course> getCoursesOfSemester(String semester) {
+        ArrayList<Course> coursesToReturn = new ArrayList<>();
+        for (Course course : coursesHistory) {
+            if (course.getSemester().equals(semester))
+                coursesToReturn.add(course);
+        }
+        return coursesToReturn;
     }
 }
