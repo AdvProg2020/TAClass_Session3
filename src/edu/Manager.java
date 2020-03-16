@@ -1,6 +1,7 @@
 package edu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 public class Manager {
@@ -51,7 +52,7 @@ public class Manager {
         }
     }
 
-    public Student getStudentById(String studentId) {
+    private Student getStudentById(String studentId) {
         for (Student student : students) {
             if (student.getStudentId().equals(studentId))
                 return student;
@@ -59,7 +60,7 @@ public class Manager {
         return null;
     }
 
-    public Course getCourseByName(String courseName) {
+    private Course getCourseByName(String courseName) {
         for (Course course : coursesThisSemester) {
             if (course.getName().equals(courseName))
                 return course;
@@ -83,8 +84,19 @@ public class Manager {
         student.dropCourse(course);
     }
 
+    public void submitCourseMarkForStudent(String courseName, float mark, String studentId) {
+        Student student = getStudentById(studentId);
+        Course course = getCourseByName(courseName);
+        student.submitCourseMark(course, mark);
+    }
+
     public Set<Course> getStudentCoursesThisSemester(String studentId) {
         Student student = getStudentById(studentId);
         return student.getCoursesThisSemester().keySet();
+    }
+
+    public HashMap<Course, CourseInfo> getStudentCoursesInfoThisSemester(String studentId) {
+        Student student = getStudentById(studentId);
+        return student.getCoursesThisSemester();
     }
 }

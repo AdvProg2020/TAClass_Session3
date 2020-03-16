@@ -68,7 +68,7 @@ public class Student {
         coursesThisSemester.remove(course);
     }
 
-    public void getMark(Course course, float mark) {
+    public void submitCourseMark(Course course, float mark) {
         for (Course courseLoop : coursesThisSemester.keySet()) {
             if (courseLoop.getName().equals(course.getName())) {
                 CourseInfo newCourseInfo = coursesThisSemester.get(courseLoop);

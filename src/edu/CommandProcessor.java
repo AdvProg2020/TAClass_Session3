@@ -2,6 +2,7 @@ package edu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class CommandProcessor {
@@ -63,6 +64,17 @@ public class CommandProcessor {
         manager.dropCourseForStudent(splitInput[2], splitInput[3]);
     }
 
+    private void processSubmitCourseMark(String[] splitInput) {
+        manager.submitCourseMarkForStudent(splitInput[3], Float.parseFloat(splitInput[4]), splitInput[5]);
+    }
+
+    private void processShowReportForStudent(String[] splitInput) {
+        HashMap<Course, CourseInfo> studentCoursesThisSemester = manager.getStudentCoursesInfoThisSemester(splitInput[4]);
+        for (Course course : studentCoursesThisSemester.keySet()) {
+            System.out.println(course.getName() + " : " + studentCoursesThisSemester.get(course).getMark());
+        }
+    }
+
     public void run() {
         String input;
         System.out.println("Enter your command :");
@@ -85,6 +97,10 @@ public class CommandProcessor {
                 processDropCourse(input.split("\\s"));
             } else if (input.startsWith("show courses for student")) {
                 processShowCoursesForStudent(input.split("\\s"));
+            } else if (input.startsWith("submit course mark")) {
+                processSubmitCourseMark(input.split("\\s"));
+            } else if (input.startsWith("show report for student")) {
+                processShowReportForStudent(input.split("\\s"));
             }
             else {
                 System.err.println("invalid command");
