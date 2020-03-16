@@ -67,14 +67,10 @@ public class Manager {
         return null;
     }
 
-    public Boolean hasCourse(Student student, Course course) {
-        return student.getCoursesThisSemester().containsKey(course);
-    }
-
     public Boolean takeCourseForStudent(String courseName, String studentId) {
         Student student = getStudentById(studentId);
         Course course = getCourseByName(courseName);
-        if(!hasCourse(student, course) && (course.getPreCourses().size() == 0)) {
+        if(!student.hasCourse(course) && (course.getPreCourses().size() == 0 || student.hasPassedPreCourses(course))) {
             student.takeCourse(course);
             return true;
         }

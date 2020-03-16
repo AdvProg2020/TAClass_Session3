@@ -8,14 +8,14 @@ public class Student {
     private String firstName;
     private String lastName;
     private HashMap<Course, CourseInfo> coursesThisSemester;
-    private ArrayList<Course> coursesPassed;
+    private HashMap<Course, CourseInfo> coursesPassed;
 
     public Student(String studentId, String firstName, String lastName) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
         coursesThisSemester = new HashMap<>();
-        coursesPassed = new ArrayList<>();
+        coursesPassed = new HashMap<>();
     }
 
     @Override
@@ -35,8 +35,29 @@ public class Student {
         return coursesThisSemester;
     }
 
-    public ArrayList<Course> getCoursesPassed() {
-        return coursesPassed;
+    public Boolean hasCourse(Course course) {
+        if (coursesThisSemester.containsKey(course))
+            return true;
+        else {
+            for (Course passedCourse : coursesPassed.keySet()) {
+                if (passedCourse.getName().equals(course.getName()))
+                    return true;
+            }
+            return false;
+        }
+    }
+
+    public Boolean hasPassedPreCourses(Course course) {
+        ArrayList<String> preCoursesName = course.getPreCourses();
+        for (Course passedCourse : coursesPassed.keySet()) {
+            for (String preCourseName : preCoursesName) {
+                if (passedCourse.getName().equals(preCourseName)) {
+                    preCoursesName.remove(preCourseName);
+                    break;
+                }
+            }
+        }
+        return preCoursesName.isEmpty();
     }
 
     public void takeCourse(Course course) {
@@ -60,8 +81,9 @@ public class Student {
 
     public void passCourses() {
         for (Course course : coursesThisSemester.keySet()) {
-            if (coursesThisSemester.get(course).getMark() >= 10) {
-                coursesPassed.add(course);
+            CourseInfo courseInfo = coursesThisSemester.get(course);
+            if (courseInfo.getMark() >= 10) {
+                coursesPassed.put(course, courseInfo);
             }
         }
         coursesThisSemester.clear();
