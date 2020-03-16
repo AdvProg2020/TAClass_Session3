@@ -77,6 +77,12 @@ public class Manager {
         return false;
     }
 
+    public void dropCourseForStudent(String courseName, String studentId) {
+        Student student = getStudentById(studentId);
+        Course course = getCourseByName(courseName);
+        student.dropCourse(course);
+    }
+
     public Set<Course> getStudentCoursesThisSemester(String studentId) {
         Student student = getStudentById(studentId);
         return student.getCoursesThisSemester().keySet();

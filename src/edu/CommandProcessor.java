@@ -13,50 +13,54 @@ public class CommandProcessor {
         scanner = new Scanner(System.in);
     }
 
-    public void processAddStudent(String[] splitInput) {
+    private void processAddStudent(String[] splitInput) {
         manager.addStudent(splitInput[2], splitInput[3], splitInput[4]);
     }
 
-    public void processAddProfessor(String[] splitInput) {
+    private void processAddProfessor(String[] splitInput) {
         manager.addProfessor(splitInput[2], splitInput[3], splitInput[4]);
     }
 
-    public void processAddCourse(String[] splitInput) {
+    private void processAddCourse(String[] splitInput) {
         ArrayList<String> preCourses = new ArrayList<>();
         if (splitInput.length == 6)
             Collections.addAll(preCourses, splitInput[5].split(","));
         manager.addCourse(splitInput[2], splitInput[3], splitInput[4], preCourses);
     }
 
-    public void processShowStudents() {
+    private void processShowStudents() {
         for (Student student : manager.getStudents()) {
             System.out.println(student);
         }
     }
 
-    public void processShowProfessors() {
+    private void processShowProfessors() {
         for (Professor professor : manager.getProfessors()) {
             System.out.println(professor);
         }
     }
 
-    public void processShowThisSemesterCourses() {
+    private void processShowThisSemesterCourses() {
         for (Course course : manager.getCoursesThisSemester()) {
             System.out.println(course);
         }
     }
 
-    public void processTakeCourse(String[] splitInput) {
+    private void processTakeCourse(String[] splitInput) {
         if (manager.takeCourseForStudent(splitInput[2], splitInput[3]))
             System.out.println("Successfully took course!");
         else
             System.out.println("Failed to take course!");
     }
 
-    public void processShowCoursesForStudent(String[] splitInput) {
+    private void processShowCoursesForStudent(String[] splitInput) {
         for (Course course : manager.getStudentCoursesThisSemester(splitInput[4])) {
             System.out.println(course);
         }
+    }
+
+    private void processDropCourse(String[] splitInput) {
+        manager.dropCourseForStudent(splitInput[2], splitInput[3]);
     }
 
     public void run() {
@@ -77,6 +81,8 @@ public class CommandProcessor {
                 processShowThisSemesterCourses();
             } else if (input.startsWith("take course")) {
                 processTakeCourse(input.split("\\s"));
+            } else if (input.startsWith("drop course")) {
+                processDropCourse(input.split("\\s"));
             } else if (input.startsWith("show courses for student")) {
                 processShowCoursesForStudent(input.split("\\s"));
             }
