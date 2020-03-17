@@ -36,12 +36,12 @@ public class Manager {
         return coursesHistory;
     }
 
-    public void addStudent(String studentId, String studentFirstName, String studentLastName) {
-        students.add(new Student(studentId, studentFirstName, studentLastName));
+    public void addStudent(String studentId, String studentFirstName, String studentLastName, String nationalCode) {
+        students.add(new Student(studentId, studentFirstName, studentLastName, nationalCode));
     }
 
-    public void addProfessor(String professorFirstName, String professorLastName, String professorRank) {
-        professors.add(new Professor(professorFirstName, professorLastName, professorRank));
+    public void addProfessor(String professorFirstName, String professorLastName, String professorRank, String nationalCode) {
+        professors.add(new Professor(professorFirstName, professorLastName, professorRank, nationalCode));
     }
 
     public void addCourse(String courseName, String professorFirstName, String professorLastName, ArrayList<String> preCourses) {
@@ -134,5 +134,24 @@ public class Manager {
                 coursesToReturn.add(course);
         }
         return coursesToReturn;
+    }
+
+    public Person receiveLoan(String nationalCode) {
+        Person person;
+        for (Student student : students) {
+            if (student.nationalCode.equals(nationalCode)) {
+                person = student;
+                person.receiveLoan();
+                return person;
+            }
+        }
+        for (Professor professor : professors) {
+            if (professor.nationalCode.equals(nationalCode)) {
+                person = professor;
+                person.receiveLoan();
+                return person;
+            }
+        }
+        return null;
     }
 }

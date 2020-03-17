@@ -3,17 +3,14 @@ package edu;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Student {
+public class Student extends Person {
     private String studentId;
-    private String firstName;
-    private String lastName;
     private HashMap<Course, CourseInfo> coursesThisSemester;
     private HashMap<Course, CourseInfo> coursesPassed;
 
-    public Student(String studentId, String firstName, String lastName) {
+    public Student(String studentId, String firstName, String lastName, String nationalCode) {
+        super(firstName, lastName, nationalCode);
         this.studentId = studentId;
-        this.firstName = firstName;
-        this.lastName = lastName;
         coursesThisSemester = new HashMap<>();
         coursesPassed = new HashMap<>();
     }
@@ -24,6 +21,7 @@ public class Student {
                 "studentId='" + studentId + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", nationalCode='" + nationalCode + '\'' +
                 '}';
     }
 
@@ -89,4 +87,8 @@ public class Student {
         coursesThisSemester.clear();
     }
 
+    @Override
+    public void receiveLoan() {
+        this.loanReceived = Person.studentLoanAmount;
+    }
 }

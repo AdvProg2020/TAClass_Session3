@@ -15,11 +15,11 @@ public class CommandProcessor {
     }
 
     private void processAddStudent(String[] splitInput) {
-        manager.addStudent(splitInput[2], splitInput[3], splitInput[4]);
+        manager.addStudent(splitInput[2], splitInput[3], splitInput[4], splitInput[5]);
     }
 
     private void processAddProfessor(String[] splitInput) {
-        manager.addProfessor(splitInput[2], splitInput[3], splitInput[4]);
+        manager.addProfessor(splitInput[2], splitInput[3], splitInput[4], splitInput[5]);
     }
 
     private void processAddCourse(String[] splitInput) {
@@ -86,6 +86,11 @@ public class CommandProcessor {
         }
     }
 
+    private void processReceiveLoan(String[] splitInput) {
+        Person person = manager.receiveLoan(splitInput[2]);
+        System.out.println("Granted money to " + person.getFirstName() + " " + person.getLastName());
+    }
+
     public void run() {
         String input;
         System.out.println("Enter your command :");
@@ -116,7 +121,10 @@ public class CommandProcessor {
                 processGoNextSemester();
             } else if (input.startsWith("show courses history")) {
                 processShowCourseHistory(input.split("\\s"));
-            } else {
+            } else if (input.startsWith("receive loan")) {
+                processReceiveLoan(input.split("\\s"));
+            }
+            else {
                 System.err.println("invalid command");
             }
         }
