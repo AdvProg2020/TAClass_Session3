@@ -18,7 +18,7 @@ public class Professor extends Person {
 
     @Override
     public void receiveLoan() {
-        loanReceived = Person.professorLoanAmount;
+        loanReceived += Person.professorLoanAmount;
     }
 
     public String getRank() {

@@ -89,6 +89,6 @@ public class Student extends Person {
 
     @Override
     public void receiveLoan() {
-        this.loanReceived = Person.studentLoanAmount;
+        this.loanReceived += Person.studentLoanAmount;
     }
 }
